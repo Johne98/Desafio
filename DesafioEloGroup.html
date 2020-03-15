@@ -1,0 +1,166 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Formulário EloGroup</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type = "text/javascript" src="js/jquery.mask.min.js"></script>
+<link  href="css/bootstrap.min.css" rel="stylesheet" type = "text/css"/>
+<script "text/javascript" src="js/bootstrap.min.js"></script>
+<style type="text/css">
+
+	#logo{
+		background-image:url(logo.jfif);
+		background-repeat:no-repeat;
+		height: 120px;
+		left: 720px;
+	}
+	
+	#hide{
+		opacity: 0;
+		visibility: hidden;
+		height: 0;
+		margin-top: -70px;	
+	}
+	
+</style>
+
+	
+
+	<!--script para validações dos campos "Nome", "Telefone" e "Escolha Opcão"-->
+	
+	<script type ="text/javascript">
+		function valida(opcao){
+			var nome = elogroup.nome.value;
+			var telefone = elogroup.telefone.value;
+			var opcao = elogroup.opcao.value;
+	
+			if(nome == ""){
+				alert("O campo nome precisa ser preenchido!");
+				olegroup.nome.focus();
+				return false;
+			}
+			
+			if(telefone == ""){
+				alert("O campo Telefone precisa ser preenchido!");
+				olegroup.telefone.focus();
+				return false;
+			}
+			
+			if(opcao == "Selecione"){
+				
+				alert("Escolha uma opção");
+				olegroup.opcao.focus();
+				return false;
+			}
+		}	
+	</script>
+	<!--script para colocar as opções de redes sociais marcadas em um array-->
+	<script>
+		function lista() {
+			var escolha = [];
+			var armazena = document.getElementsByName('escolha');
+			for (var i = 0; i < armazena.length; i++) {
+				if (armazena[i].checked) escolha.push(armazena[i].value);
+			}
+			var resultado = escolha.join('_');
+			alert(resultado);
+			document.location.href = 'GetElementByName.asp?resultado=' + resultado;
+}
+		
+	</script>
+	
+	<script type = "text/javascript">
+	$("#send").click(function(event){
+            $(event.target).attr('disabled', 'disabled');
+     });
+	</script>
+	<script type="text/javascript">
+	
+	<!--script para Habilitar ou desabilitar as escolhas das redes sociais-->
+	
+		function habilita(valor){
+	
+			var status = document.getElementById('escolha').disabled;
+			
+		
+			if(valor == "sim"){
+				document.getElementById('escolha').disabled = false;
+				document.getElementById('escolha2').disabled = false;
+				document.getElementById('escolha3').disabled = false;
+			
+			}else{
+				document.getElementById('escolha').disabled = true;
+				document.getElementById('escolha2').disabled = true;
+				document.getElementById('escolha3').disabled = true;
+			}
+			
+		}	
+	</script>
+	
+</head>
+<body>
+<form name="elogroup" align="center" method="POST" action"http://localhost:8080">
+	<div class="row">
+		<div id="logo" class="col-sm-3"></div>
+	</div>
+	</br>
+	</br>
+	</br>
+	</br>
+	
+	<div class="form-group">
+		<label for="nome" ><b>Nome</b></label></br>
+		<input type="text" class="w-25 p-1" class="form-control" style="border-radius" name="nome" id="nome" placeholder="Nome" maxlength="45"/>
+		<small id="nomeObrigatorio" class="form-text text-muted">* Obrigatório</small>
+	</div>
+	
+		<div class="form-group">
+			<label for="telefone"><b>Telefone</b></label></br>
+			<input type="text"  class="w-25 p-1" class="form-control" name="telefone" placeholder="xx - 00000000" id="telefone" />
+			<small id="telObrigatorio" class="form-text text-muted">* Obrigatório</small>
+		</div>
+			
+		<div class="form-group">
+			<label for="opcao"><b>Como nos Conheceu?</b></label></br>
+			<select id="opcao" class="w-25 p-1" class="form-control">
+					<option>Selecione</option>
+					<option>TV</option>
+					<option>Internet</option>
+					<option>Outros</option>
+			</select>
+		</div>
+		
+		 <div class="form-radio">
+			<label class="form-check-label" for=""><b>Possui rede social?</b></label></br>
+			<input type = "radio" name = "escolha" id="s" onclick="habilita('sim')">Sim</br>
+			<input type = "radio" name = "escolha" id="n" onclick="habilita('nao')">Não</br>			
+		</div>
+		</br>
+				
+		<div class="form-check">		
+			<label class="form-check-label" for="escolha"><b>Quais?</b></label></br>
+			<input type="checkbox" name="escolha" id="escolha" value="facebook">  Facebook</br>
+			<input type="checkbox" name="escolha" id="escolha2" value="linkedin">  LinkedIn</br>
+			<input type="checkbox" name="escolha" id="escolha3" value="instagram">  Instagram</br>		
+		</div>
+		
+		</br>
+		</br>
+		</br>
+			
+		<div align="center">
+			<input type="submit" class="btn btn-dark" value="Enviar" onclick="return valida();return lista()" >
+		</div>
+</form>
+
+	<!--Aplicação da máscara para o telefone utilizando JQuery-->
+
+<script>
+	$("#telefone").mask("00 - 00000000");
+	
+	 
+</script>
+
+</body>
+</html>
